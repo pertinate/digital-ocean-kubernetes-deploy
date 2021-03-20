@@ -5,11 +5,15 @@ metadata:
   namespace: default
   labels:
     app: do-kubernetes-sample-app
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-size-slug: "lb-large"
 spec:
-  type: ClusterIP
-  ports:
-    - port: 80
-      targetPort: http
-      name: http
+  type: LoadBalancer
   selector:
     app: do-kubernetes-sample-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
